@@ -1,25 +1,35 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 // set up express server
 const app = express();
 
+// to allow cors
+app.use(cors());
+
+// set json document size to be processed
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 // set up mongoose
-// mongoose.connect(
-//     //connection string put here
-//     {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         useCreateIndex: true,
-//     },
-//     (err) => {
-//         if (err) throw err;
-//         console.log("MongoDB connection established");
-//     }
-// );
+mongoose.connect(
+    //connection string put here
+    process.env.MONGODB_CONNECTION_STRING,
+    {
+        useNewUrlParser: true, 
+        useUnifiedTopology: true
+    },
+    (err) => {
+        if (err) throw err;
+        console.log("MongoDB connection established");
+    }
+);
 
 // set up routes
-app.get('/', (req, res) => res.send('Hello world!'));
+app.use('/api', require('./routes/todoitemRouter'));
 
 // port
 const PORT = process.env.PORT || 5000;
