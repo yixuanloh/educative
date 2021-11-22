@@ -1,0 +1,12 @@
+{
+  "name": "Educative",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^6.4.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"cd backend && nodemon server.js\" \"cd frontend && yarn start\" "
+  }
+}
