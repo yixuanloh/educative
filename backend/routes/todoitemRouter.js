@@ -33,8 +33,21 @@ router.post("/add", async (req, res) => {
     }
     catch (error) {
         res.status(500).send(error);
-        res.json(req.body);
     }
 })
+
+router.post("/update/:id", async (req, res) => {
+    try {
+        const todoitem = await TODOITEM.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        if(!todoitem) {
+            return res.status(404).send();
+        }
+        res.status(200).send(todoitem);
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+})
+
 
 module.exports = router
